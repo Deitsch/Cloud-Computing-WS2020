@@ -20,3 +20,8 @@ resource "exoscale_security_group_rule" "ssh" {
   start_port = 22
   end_port = 22
 }
+
+resource "exoscale_ssh_keypair" "admin" {
+  name       = "admin"
+  public_key = var.deitschPublicKey
+}
