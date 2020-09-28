@@ -16,9 +16,10 @@ resource "exoscale_nlb_service" "webservice" {
     strategy = "round-robin"
 
   healthcheck {
-    port = 8080
+    port = 80
+  //  mode = "tcp"
     mode = "http"
-    uri = "/healthz"
+    uri = "/"
     interval = 5
     timeout = 3
     retries = 1
