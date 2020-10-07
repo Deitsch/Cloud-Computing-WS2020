@@ -12,14 +12,14 @@ resource "exoscale_nlb_service" "webservice" {
   instance_pool_id = exoscale_instance_pool.webservice.id
     protocol = "tcp"
     port = 80
-    target_port = 80
+    target_port = 8080
     strategy = "round-robin"
 
   healthcheck {
-    port = 80
+    port = 8080
   //  mode = "tcp"
     mode = "http"
-    uri = "/"
+    uri = "/health"
     interval = 5
     timeout = 3
     retries = 1

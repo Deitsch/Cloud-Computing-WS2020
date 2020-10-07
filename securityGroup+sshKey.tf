@@ -8,8 +8,8 @@ resource "exoscale_security_group_rule" "http" {
   type = "INGRESS"
   protocol = "tcp"
   cidr = "0.0.0.0/0"
-  start_port = 80
-  end_port = 80
+  start_port = 8080
+  end_port = 8080
 }
 
 resource "exoscale_security_group_rule" "ssh" {
