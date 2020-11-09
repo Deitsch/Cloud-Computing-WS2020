@@ -50,6 +50,7 @@ docker run -d \
   janoszen/http-load-generator:1.0.1
 
 # Run the node exporter
+# Exposes to 9100 (defined in Dockerfile!)
 docker run -d \
  --restart=always \
  --net="host" \

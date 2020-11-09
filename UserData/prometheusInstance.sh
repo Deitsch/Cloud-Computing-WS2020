@@ -37,11 +37,23 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['localhost:9090']
+  - job_name: Monitoring Server Node Exporter
+    static_configs:
+      - targets:
+          - 'localhost:9100'
 """ >> /srv/prometheus.yml
 
 # pass it to docker
 docker run \
     -d \
     -p 9090:9090 \
+    --net="host" \
     -v /srv/prometheus.yml:/etc/prometheus/prometheus.yml \
     prom/prometheus
+
+docker run -d \
+  --net="host" \
+  --pid="host" \
+  -v "/:/host:ro,rslave" \
+  quay.io/prometheus/node-exporter \
+  --path.rootfs=/host
