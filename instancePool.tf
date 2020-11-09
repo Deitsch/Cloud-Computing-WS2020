@@ -3,10 +3,10 @@ data "exoscale_compute_template" "ubuntu" {
     name = "Linux Ubuntu 20.04 LTS 64-bit"
 }
 
-resource "exoscale_instance_pool" "webservice" {
-  description = "Instance pool of my webservice"
+resource "exoscale_instance_pool" "InstancePool_MyService" {
+  name = "InstancePool_MyService"
+  description = "Instance pool of my MyService"
   zone = var.zone
-  name = "webservice"
   template_id = data.exoscale_compute_template.ubuntu.id
   size = 3
   service_offering = "micro"

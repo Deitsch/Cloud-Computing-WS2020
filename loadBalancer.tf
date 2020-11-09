@@ -1,15 +1,15 @@
-resource "exoscale_nlb" "webservice" {
-  name = "webservice"
-  description = "This is the Network Load Balancer for my webservice"
+resource "exoscale_nlb" "NLB_MyService" {
+  name = "NLB_MyService"
+  description = "This is the Network Load Balancer for my service"
   zone = var.zone
 }
 
-resource "exoscale_nlb_service" "webservice" {
-  description = "Webservice over HTTP"
-  zone = exoscale_nlb.webservice.zone
-  name = "webservice"
-  nlb_id = exoscale_nlb.webservice.id
-  instance_pool_id = exoscale_instance_pool.webservice.id
+resource "exoscale_nlb_service" "NLB_Service_MyService" {
+  name = "NLB_Service_MyService"
+  description = "MyService NLB service"
+  zone = exoscale_nlb.NLB_MyService.zone
+  nlb_id = exoscale_nlb.NLB_MyService.id
+  instance_pool_id = exoscale_instance_pool.InstancePool_MyService.id
     protocol = "tcp"
     port = 80
     target_port = 8080

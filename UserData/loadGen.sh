@@ -32,12 +32,12 @@ docker run -d \
   janoszen/http-load-generator:1.0.1
 
 # Run the node exporter
-#docker run -d \
-#  --restart=always \
-#  --net="host" \
-#  --pid="host" \
-#  -v "/:/host:ro,rslave" \
-#  quay.io/prometheus/node-exporter \
-#  --path.rootfs=/host
-#
+docker run -d \
+ --restart=always \
+ --net="host" \
+ --pid="host" \
+ -v "/:/host:ro,rslave" \
+ quay.io/prometheus/node-exporter \
+ --path.rootfs=/host
+
 # endregion
