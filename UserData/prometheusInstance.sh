@@ -37,23 +37,27 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['localhost:9090']
-  - job_name: Monitoring Server Node Exporter
-    static_configs:
-      - targets:
-          - 'localhost:9100'
+  - job_name: Custom
+      file_sd_configs:
+        - files:
+            - /service-discovery/target.json
+          refresh_interval: 10s
 """ >> /srv/prometheus.yml
 
-# pass it to docker
+# creating volume to share target.json
+docker volume create --name TargetsVolume
+
 docker run \
     -d \
     -p 9090:9090 \
-    --net="host" \
+    -v TargetsVolume:/service-discovery \
     -v /srv/prometheus.yml:/etc/prometheus/prometheus.yml \
     prom/prometheus
 
-docker run -d \
-  --net="host" \
-  --pid="host" \
-  -v "/:/host:ro,rslave" \
-  quay.io/prometheus/node-exporter \
-  --path.rootfs=/host
+docker run \
+    -d \
+    -v TargetsVolume:/service-discovery \
+    -e EXOSCALE_KEY=${exoscale_key} \
+    -e EXOSCALE_SECRET=${exoscale_secret} \
+    -e EXOSCALE_ZONE=${exoscale_zone} \
+    deitsch/exoscale_sd
