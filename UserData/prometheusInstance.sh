@@ -38,10 +38,10 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
   - job_name: Custom
-      file_sd_configs:
-        - files:
-            - /service-discovery/target.json
-          refresh_interval: 10s
+    file_sd_configs:
+      - files:
+          - /service-discovery/targets.json
+        refresh_interval: 10s
 """ >> /srv/prometheus.yml
 
 # creating volume to share target.json
