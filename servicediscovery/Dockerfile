@@ -16,4 +16,4 @@ RUN mkdir root/.config/exoscale/
 RUN apt update
 RUN apt-get install -y ca-certificates
 
-ENTRYPOINT [ "/serviceDiscovery.sh"]
+ENTRYPOINT ["/serviceDiscovery.sh"]
