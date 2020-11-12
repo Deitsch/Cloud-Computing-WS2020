@@ -1,10 +1,10 @@
 # Cloud-Computing-WS2020
-Repo for Terraform hand-ins
+Repo for Terraform hand-ins for Cloud Computing WS2020
 
 ## Service Discovery Agent
 
-There are 2 options to get the image
-1. pull `deitsch/exoscale_sd` from Dockerhub
+There are 2 options to get the image:
+1. Pull `deitsch/exoscale_sd` from Dockerhub
 2. Build the agent with the [Dockerfile](servicediscovery/Dockerfile)
 
 To share the `config.json` with prometheus, share a volume with the prometheus container.
