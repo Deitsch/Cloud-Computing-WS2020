@@ -12,6 +12,8 @@ resource "exoscale_compute" "MyPrometheus" {
     user_data = templatefile("UserData/prometheusInstance.sh", {
         exoscale_key = var.exoscale_key,
         exoscale_secret = var.exoscale_secret,
-        exoscale_zone = var.zone
+        exoscale_zone = var.zone,
+        exoscale_instancepool_id = exoscale_instance_pool.InstancePool_MyService.id,
+        target_port = "9100"
     })
 }

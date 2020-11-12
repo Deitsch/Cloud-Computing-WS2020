@@ -60,4 +60,6 @@ docker run \
     -e EXOSCALE_KEY=${exoscale_key} \
     -e EXOSCALE_SECRET=${exoscale_secret} \
     -e EXOSCALE_ZONE=${exoscale_zone} \
+    -e EXOSCALE_INSTANCEPOOL_ID=${exoscale_instancepool_id} \
+    -e TARGET_PORT=${target_port} \
     deitsch/exoscale_sd
