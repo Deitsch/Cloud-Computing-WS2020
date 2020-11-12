@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'json'
 
-# --- available ENV Vars ---
+# --- available ENV Vars --- (defined by Sprint2)
 # EXOSCALE_KEY
 # EXOSCALE_SECRET
 # EXOSCALE_ZONE (e.g. at-vie-1)
@@ -14,7 +14,7 @@ isLocal = false
 poolID = isLocal ? "InstancePool_MyService" : "#{ENV['EXOSCALE_INSTANCEPOOL_ID']}"
 nodeExpPort = isLocal ? "9100" : "#{ENV['TARGET_PORT']}"
 zone = isLocal ? "at-vie-1" : "#{ENV['EXOSCALE_ZONE']}"
-filepath = isLocal ? "./targets.json" : "/service-discovery/targets.json"
+filepath = isLocal ? "./config.json" : "/srv/service-discovery/config.json" # make this ENV configurable when strint 2 is over
 scrapeTime = 15
 
 while true

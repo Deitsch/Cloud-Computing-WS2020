@@ -14,6 +14,7 @@ resource "exoscale_compute" "MyPrometheus" {
         exoscale_secret = var.exoscale_secret,
         exoscale_zone = var.zone,
         exoscale_instancepool_id = exoscale_instance_pool.InstancePool_MyService.id,
-        target_port = "9100"
+        target_port = "9100",
+        targetFilePath = "/srv/service-discovery"
     })
 }

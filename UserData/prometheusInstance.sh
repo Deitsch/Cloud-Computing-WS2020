@@ -37,10 +37,10 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['localhost:9090']
-  - job_name: Custom
+  - job_name: 'scrape targets'
     file_sd_configs:
       - files:
-          - /service-discovery/targets.json
+          - ${targetFilePath}/config.json
         refresh_interval: 10s
 """ >> /srv/prometheus.yml
 
@@ -50,13 +50,13 @@ docker volume create --name TargetsVolume
 docker run \
     -d \
     -p 9090:9090 \
-    -v TargetsVolume:/service-discovery \
+    -v TargetsVolume:${targetFilePath} \
     -v /srv/prometheus.yml:/etc/prometheus/prometheus.yml \
     prom/prometheus
 
 docker run \
     -d \
-    -v TargetsVolume:/service-discovery \
+    -v TargetsVolume:${targetFilePath} \
     -e EXOSCALE_KEY=${exoscale_key} \
     -e EXOSCALE_SECRET=${exoscale_secret} \
     -e EXOSCALE_ZONE=${exoscale_zone} \
