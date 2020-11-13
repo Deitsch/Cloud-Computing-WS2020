@@ -31,7 +31,7 @@ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) \
    stable"
 
-# update repositories (needed cause we jsut added new one)
+# update repositories (needed cause we just added new one)
 apt-get update
 
 # installing docker engin
