@@ -34,13 +34,13 @@ resource "exoscale_security_group_rule" "service_nodeExporter" {
 
 # Securtiy Group for Prometheus Instance
 
-resource "exoscale_security_group" "SG_Prometheus" {
+resource "exoscale_security_group" "SG_Monitoring" {
   name = "SG_Prometheus"
   description = "Security Group for Prometheus Instance"
 }
 
-resource "exoscale_security_group_rule" "prom_prometheus" {
-  security_group_id = exoscale_security_group.SG_Prometheus.id
+resource "exoscale_security_group_rule" "monitor_prometheus" {
+  security_group_id = exoscale_security_group.SG_Monitoring.id
   type = "INGRESS"
   protocol = "TCP"
   cidr = "0.0.0.0/0"
@@ -48,11 +48,20 @@ resource "exoscale_security_group_rule" "prom_prometheus" {
   end_port = 9090
 }
 
-resource "exoscale_security_group_rule" "prom_ssh" {
-  security_group_id = exoscale_security_group.SG_Prometheus.id
+resource "exoscale_security_group_rule" "monitor_ssh" {
+  security_group_id = exoscale_security_group.SG_Monitoring.id
   type = "INGRESS"
   protocol = "TCP"
   cidr = "0.0.0.0/0"
   start_port = 22
   end_port = 22
+}
+
+resource "exoscale_security_group_rule" "monitor_grafana" {
+  security_group_id = exoscale_security_group.SG_Monitoring.id
+  type = "INGRESS"
+  protocol = "TCP"
+  cidr = "0.0.0.0/0"
+  start_port = 3000
+  end_port = 3000
 }

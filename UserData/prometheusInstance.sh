@@ -44,6 +44,18 @@ scrape_configs:
         refresh_interval: 10s
 """ >> /srv/prometheus.yml
 
+echo """
+apiVersion: 1
+datasources:
+- name: Prometheus
+  type: prometheus
+  access: proxy
+  orgId: 1
+  url: http://localhost:9090
+  version: 1
+  editable: false
+""" >> /srv/grafana.yml
+
 # creating volume to share target.json
 docker volume create --name TargetsVolume
 
@@ -63,3 +75,9 @@ docker run \
     -e EXOSCALE_INSTANCEPOOL_ID=${exoscale_instancepool_id} \
     -e TARGET_PORT=${target_port} \
     deitsch/exoscale_sd
+  
+docker run \
+  -d \
+  -p 3000:3000 \
+  -v /srv/grafana.yml:/etc/grafana/provisioning/datasources/grafana.yml \
+  grafana/grafana

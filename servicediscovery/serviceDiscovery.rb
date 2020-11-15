@@ -9,6 +9,10 @@ require 'json'
 # EXOSCALE_INSTANCEPOOL_ID
 # TARGET_PORT
 
+# handling SIGTERM
+Signal.trap('TERM') { exit() }
+Signal.trap('INT') { exit() } # catch ctrl + c
+
 isLocal = false
 
 poolID = isLocal ? "InstancePool_MyService" : "#{ENV['EXOSCALE_INSTANCEPOOL_ID']}"
