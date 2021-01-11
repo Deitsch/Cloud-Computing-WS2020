@@ -36,7 +36,6 @@ apt-get update
 
 # installing docker engin
 apt-get install -y docker-ce docker-ce-cli containerd.io
-# endregion
 
 # region Launch containers
 
@@ -47,16 +46,14 @@ apt-get install -y docker-ce docker-ce-cli containerd.io
 docker run -d \
   --restart=always \
   -p 8080:8080 \
-  janoszen/http-load-generator:1.0.1
+  quay.io/janoszen/http-load-generator:1.0.1
 
 # Run the node exporter
 # Exposes to 9100 (defined in Dockerfile!)
 docker run -d \
- --restart=always \
- --net="host" \
- --pid="host" \
- -v "/:/host:ro,rslave" \
- quay.io/prometheus/node-exporter \
- --path.rootfs=/host
-
-# endregion
+  --restart=always \
+  --net="host" \
+  --pid="host" \
+  -v "/:/host:ro,rslave" \
+  quay.io/prometheus/node-exporter \
+  --path.rootfs=/host

@@ -1,8 +1,6 @@
 FROM ubuntu
 
 # copy service to container
-# COPY serviceDiscovery.sh /
-# RUN chmod +x serviceDiscovery.sh
 COPY serviceDiscovery.rb /
 RUN chmod +x serviceDiscovery.rb
 
