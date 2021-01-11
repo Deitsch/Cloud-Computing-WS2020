@@ -329,7 +329,7 @@ docker run \
 docker run \
   -d \
   -p 8090:8090 \
-  --name grafana \
-  --net=monitoring \
+  --name autoscaler \
+  --net=monitor \
   --restart=always \
   quay.io/janoszen/exoscale-grafana-autoscaler
