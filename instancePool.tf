@@ -8,7 +8,7 @@ resource "exoscale_instance_pool" "InstancePool_MyService" {
   description = "Managed by Terraform"
   zone = var.zone
   template_id = data.exoscale_compute_template.ubuntu.id
-  size = 2
+  size = 1
   service_offering = "micro"
   disk_size = 10
   user_data = file("UserData/loadGenerator+NodeExporter.sh")

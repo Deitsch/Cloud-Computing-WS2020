@@ -13,7 +13,7 @@ require 'json'
 Signal.trap('TERM') { exit() }
 Signal.trap('INT') { exit() } # catch ctrl + c
 
-isLocal = true
+isLocal = false
 
 poolID = isLocal ? "InstancePool_MyService" : "#{ENV['EXOSCALE_INSTANCEPOOL_ID']}"
 nodeExpPort = isLocal ? "9100" : "#{ENV['TARGET_PORT']}"

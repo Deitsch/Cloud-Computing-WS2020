@@ -1,6 +1,6 @@
 resource "exoscale_nlb" "NLB_MyService" {
   name = "NLB_MyService"
-  description = "This is the Network Load Balancer for my service"
+  description = "Managed by Terraform"
   zone = var.zone
 }
 
