@@ -68,7 +68,7 @@ notifiers:
     is_default: false
     send_reminder: true
     disable_resolve_message: true
-    frequency: \"2m\"
+    frequency: \"5m\"
     settings:
       autoResolve: true
       httpMethod: \"POST\"
@@ -82,7 +82,7 @@ notifiers:
     is_default: false
     send_reminder: true
     disable_resolve_message: true
-    frequency: \"2m\"
+    frequency: \"5m\"
     settings:
       autoResolve: true
       httpMethod: \"POST\"
@@ -122,9 +122,151 @@ echo """
   \"editable\": true,
   \"gnetId\": null,
   \"graphTooltip\": 0,
-  \"id\": 1,
   \"links\": [],
   \"panels\": [
+    {
+      \"alert\": {
+        \"alertRuleTags\": {},
+        \"conditions\": [
+          {
+            \"evaluator\": {
+              \"params\": [
+                0.2
+              ],
+              \"type\": \"lt\"
+            },
+            \"operator\": {
+              \"type\": \"and\"
+            },
+            \"query\": {
+              \"params\": [
+                \"A\",
+                \"1m\",
+                \"now\"
+              ]
+            },
+            \"reducer\": {
+              \"params\": [],
+              \"type\": \"avg\"
+            },
+            \"type\": \"query\"
+          }
+        ],
+        \"executionErrorState\": \"alerting\",
+        \"for\": \"1m\",
+        \"frequency\": \"1m\",
+        \"handler\": 1,
+        \"name\": \"Panel Title alert\",
+        \"noDataState\": \"no_data\",
+        \"notifications\": [
+          {
+            \"uid\": \"scale-down\"
+          }
+        ]
+      },
+      \"aliasColors\": {},
+      \"bars\": false,
+      \"dashLength\": 10,
+      \"dashes\": false,
+      \"datasource\": \"Prometheus\",
+      \"fieldConfig\": {
+        \"defaults\": {
+          \"custom\": {}
+        },
+        \"overrides\": []
+      },
+      \"fill\": 1,
+      \"fillGradient\": 0,
+      \"gridPos\": {
+        \"h\": 8,
+        \"w\": 12,
+        \"x\": 0,
+        \"y\": 0
+      },
+      \"hiddenSeries\": false,
+      \"id\": 4,
+      \"legend\": {
+        \"avg\": false,
+        \"current\": false,
+        \"max\": false,
+        \"min\": false,
+        \"show\": true,
+        \"total\": false,
+        \"values\": false
+      },
+      \"lines\": true,
+      \"linewidth\": 1,
+      \"nullPointMode\": \"null\",
+      \"options\": {
+        \"alertThreshold\": true
+      },
+      \"percentage\": false,
+      \"pluginVersion\": \"7.3.7\",
+      \"pointradius\": 2,
+      \"points\": false,
+      \"renderer\": \"flot\",
+      \"seriesOverrides\": [],
+      \"spaceLength\": 10,
+      \"stack\": false,
+      \"steppedLine\": false,
+      \"targets\": [
+        {
+          \"expr\": \"avg(sum by (instance) (rate(node_cpu_seconds_total{mode!=\\\"idle\\\"}[1m])) / sum by (instance) (rate(node_cpu_seconds_total[1m])))\",
+          \"interval\": \"\",
+          \"legendFormat\": \"\",
+          \"queryType\": \"randomWalk\",
+          \"refId\": \"A\"
+        }
+      ],
+      \"thresholds\": [
+        {
+          \"colorMode\": \"critical\",
+          \"fill\": true,
+          \"line\": true,
+          \"op\": \"lt\",
+          \"value\": 0.2
+        }
+      ],
+      \"timeFrom\": null,
+      \"timeRegions\": [],
+      \"timeShift\": null,
+      \"title\": \"CPU Usage Scale-down\",
+      \"tooltip\": {
+        \"shared\": true,
+        \"sort\": 0,
+        \"value_type\": \"individual\"
+      },
+      \"type\": \"graph\",
+      \"xaxis\": {
+        \"buckets\": null,
+        \"mode\": \"time\",
+        \"name\": null,
+        \"show\": true,
+        \"values\": []
+      },
+      \"yaxes\": [
+        {
+          \"format\": \"short\",
+          \"label\": null,
+          \"logBase\": 1,
+          \"max\": null,
+          \"min\": null,
+          \"show\": true
+        },
+        {
+          \"format\": \"short\",
+          \"label\": null,
+          \"logBase\": 1,
+          \"max\": null,
+          \"min\": null,
+          \"show\": true
+        }
+      ],
+      \"yaxis\": {
+        \"align\": false,
+        \"alignLevel\": null
+      }
+    },
     {
       \"alert\": {
         \"alertRuleTags\": {},
@@ -142,7 +284,7 @@ echo """
             \"query\": {
               \"params\": [
                 \"A\",
-                \"5m\",
+                \"1m\",
                 \"now\"
               ]
             },
@@ -154,7 +296,7 @@ echo """
           }
         ],
         \"executionErrorState\": \"alerting\",
-        \"for\": \"5m\",
+        \"for\": \"1m\",
         \"frequency\": \"1m\",
         \"handler\": 1,
         \"name\": \"Scale-up\",
@@ -182,7 +324,7 @@ echo """
         \"h\": 9,
         \"w\": 12,
         \"x\": 0,
-        \"y\": 0
+        \"y\": 8
       },
       \"hiddenSeries\": false,
       \"id\": 2,
@@ -202,7 +344,7 @@ echo """
         \"alertThreshold\": true
       },
       \"percentage\": false,
-      \"pluginVersion\": \"7.3.6\",
+      \"pluginVersion\": \"7.3.7\",
       \"pointradius\": 2,
       \"points\": false,
       \"renderer\": \"flot\",
@@ -212,7 +354,7 @@ echo """
       \"steppedLine\": false,
       \"targets\": [
         {
-          \"expr\": \"sum by (instance) (rate(node_cpu_seconds_total{mode!=\\\"idle\\\"}[1m])) / sum by (instance) (rate(node_cpu_seconds_total[1m]))\",
+          \"expr\": \"avg(sum by (instance) (rate(node_cpu_seconds_total{mode!=\\\"idle\\\"}[1m])) / sum by (instance) (rate(node_cpu_seconds_total[1m])))\",
           \"interval\": \"\",
           \"legendFormat\": \"\",
           \"queryType\": \"randomWalk\",
@@ -231,7 +373,7 @@ echo """
       \"timeFrom\": null,
       \"timeRegions\": [],
       \"timeShift\": null,
-      \"title\": \"CPU Usage\",
+      \"title\": \"CPU Usage Scale-up\",
       \"tooltip\": {
         \"shared\": true,
         \"sort\": 0,
@@ -330,6 +472,10 @@ docker run \
   -d \
   -p 8090:8090 \
   --name autoscaler \
-  --net=monitor \
+  --net=monitoring \
   --restart=always \
-  quay.io/janoszen/exoscale-grafana-autoscaler
+  quay.io/janoszen/exoscale-grafana-autoscaler \
+  --exoscale-api-key ${exoscale_key} \
+  --exoscale-api-secret ${exoscale_secret} \
+  --exoscale-zone-id 4da1b188-dcd6-4ff5-b7fd-bde984055548 \
+  --instance-pool-id ${exoscale_instancepool_id}

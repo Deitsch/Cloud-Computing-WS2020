@@ -5,7 +5,7 @@ data "exoscale_compute_template" "ubuntu" {
 
 resource "exoscale_instance_pool" "InstancePool_MyService" {
   name = "InstancePool_MyService"
-  description = "Instance pool of my MyService"
+  description = "Managed by Terraform"
   zone = var.zone
   template_id = data.exoscale_compute_template.ubuntu.id
   size = 2
