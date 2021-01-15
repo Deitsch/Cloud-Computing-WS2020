@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require "cloudstack_client"
+require 'cloudstack_client'
 require 'sinatra'
 
 # run ruby autoscaler.rb [-p PORT] [-o HOST]
@@ -12,21 +12,26 @@ require 'sinatra'
 # EXOSCALE_INSTANCEPOOL_ID
 # LISTEN_PORT
 
-isLocal = true
+isLocal = false
 
 secret = isLocal ? "" : "#{ENV['EXOSCALE_SECRET']}"
 key = isLocal ? "" : "#{ENV['EXOSCALE_KEY']}"
 poolID = isLocal ? "InstancePool_MyService" : "#{ENV['EXOSCALE_INSTANCEPOOL_ID']}"
-zoneID = isLocal ? "4da1b188-dcd6-4ff5-b7fd-bde984055548" : "#{ENV['EXOSCALE_ZONE_ID']}"
+zone = isLocal ? "at-vie-1" : "#{ENV['EXOSCALE_ZONE']}"
 listenPort = isLocal ? "8090" : "#{ENV['LISTEN_PORT']}"
 
 cs = CloudstackClient::Client.new("https://api.exoscale.com/compute", key, secret)
 
-def scaleTo(cs, size, pid, zid)
-    puts "scale poolID: #{pid} in zoneID: #{zid} to size: #{size}"
-    # cs.scale_instance_pool(id: pid, size: size, zoneid: zid)                                  # <--- not supported sadly
-    %x{ python3 scale.py #{size} }                                                              # <--- hacky workaround
-    return "scaleTo #{pid} to #{size}"
+set :run, true
+set :port, listenPort
+set :bind, '0.0.0.0'
+
+def scaleTo(cs, poolSize, exoPoolId, exoZone)
+    puts "scale poolID: #{exoPoolId} in zone: #{exoZone} to size: #{poolSize}"
+    # cs.scale_instance_pool(id: exoPoolId, size: poolSize, zoneid: exoZone)                        # <--- not supported sadly
+    # %x{ python3 scale.py #{poolSize} }                                                            # <--- hacky workaround
+    %x{ exo instancepool update #{exoPoolId} -z #{exoZone} -s #{poolSize} }                         # <--- hacky workaround
+    return "scaleTo #{exoPoolId} to #{poolSize}"
 end
 
 def getCurrentPoolSize(cs)
@@ -35,7 +40,7 @@ end
 
 
 post '/up' do
-    response = scaleTo(cs, getCurrentPoolSize(cs) + 1, poolID, zoneID)
+    response = scaleTo(cs, getCurrentPoolSize(cs) + 1, poolID, zone)
     "Scaling up\n#{response}"
 end
 
@@ -43,8 +48,23 @@ post '/down' do
     response = "Pool can't be smaller than 1 instance"
     currentPoolSize = getCurrentPoolSize(cs)
     if currentPoolSize > 1
-        response = scaleTo(cs, currentPoolSize - 1, poolID, zoneID)
+        response = scaleTo(cs, currentPoolSize - 1, poolID, zone)
     end
     "Scaling down\n#{response}"
 end
 
+# only needed because of mistake in testing tool !!
+
+get '/up' do
+    response = scaleTo(cs, getCurrentPoolSize(cs) + 1, poolID, zone)
+    "Scaling up\n#{response}"
+end
+
+get '/down' do
+    response = "Pool can't be smaller than 1 instance"
+    currentPoolSize = getCurrentPoolSize(cs)
+    if currentPoolSize > 1
+        response = scaleTo(cs, currentPoolSize - 1, poolID, zone)
+    end
+    "Scaling down\n#{response}"
+end
