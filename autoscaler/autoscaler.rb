@@ -23,11 +23,10 @@ listenPort = isLocal ? "8090" : "#{ENV['LISTEN_PORT']}"
 cs = CloudstackClient::Client.new("https://api.exoscale.com/compute", key, secret)
 
 def scaleTo(cs, size, pid, zid)
-    puts "size: #{size}"
-    puts "zoneID: #{zid}"
-    puts "poolID: #{pid}"
-    cs.scale_instance_pool(id: pid, size: size, zoneid: zid)
-    return "scaleTo #{size}, #{id}"
+    puts "scale poolID: #{pid} in zoneID: #{zid} to size: #{size}"
+    # cs.scale_instance_pool(id: pid, size: size, zoneid: zid)                                  # <--- not supported sadly
+    %x{ python3 scale.py #{size} }                                                              # <--- hacky workaround
+    return "scaleTo #{pid} to #{size}"
 end
 
 def getCurrentPoolSize(cs)
@@ -41,7 +40,7 @@ post '/up' do
 end
 
 post '/down' do
-    response = "Failed"
+    response = "Pool can't be smaller than 1 instance"
     currentPoolSize = getCurrentPoolSize(cs)
     if currentPoolSize > 1
         response = scaleTo(cs, currentPoolSize - 1, poolID, zoneID)
