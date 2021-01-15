@@ -22,6 +22,7 @@ listenPort = isLocal ? "8090" : "#{ENV['LISTEN_PORT']}"
 
 cs = CloudstackClient::Client.new("https://api.exoscale.com/compute", key, secret)
 
+# sinatra setup
 set :run, true
 set :port, listenPort
 set :bind, '0.0.0.0'
@@ -29,7 +30,6 @@ set :bind, '0.0.0.0'
 def scaleTo(cs, poolSize, exoPoolId, exoZone)
     puts "scale poolID: #{exoPoolId} in zone: #{exoZone} to size: #{poolSize}"
     # cs.scale_instance_pool(id: exoPoolId, size: poolSize, zoneid: exoZone)                        # <--- not supported sadly
-    # %x{ python3 scale.py #{poolSize} }                                                            # <--- hacky workaround
     %x{ exo instancepool update #{exoPoolId} -z #{exoZone} -s #{poolSize} }                         # <--- hacky workaround
     return "scaleTo #{exoPoolId} to #{poolSize}"
 end
