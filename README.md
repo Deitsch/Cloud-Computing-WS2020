@@ -5,7 +5,7 @@ Repo for Terraform hand-ins for Cloud Computing WS2020
 
 There are 2 options to get the image:
 1. Pull `deitsch/exoscale_sd` from Dockerhub
-2. Build the agent with the [Dockerfile](servicediscovery/Dockerfile)
+2. Build the agent with its [Dockerfile](servicediscovery/Dockerfile)
 
 To share the `config.json` with prometheus, share a volume with the prometheus container.
 
@@ -30,7 +30,7 @@ docker run \
 
 There are 2 options to get the image:
 1. Pull `deitsch/exoscale_sa` from Dockerhub
-2. Build the agent with the [Dockerfile](autoscaler/Dockerfile)
+2. Build the autoscaler with its [Dockerfile](autoscaler/Dockerfile)
 
 ### Example
 ```shell
