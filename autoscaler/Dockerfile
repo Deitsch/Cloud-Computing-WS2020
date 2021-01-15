@@ -1,8 +1,8 @@
 FROM ubuntu
 
 # copy service to container
-COPY serviceDiscovery.rb /
-RUN chmod +x serviceDiscovery.rb
+COPY autoscaler.rb /
+RUN chmod +x autoscaler.rb
 
 # download cli from github
 ADD https://github.com/exoscale/cli/releases/download/v1.20.2/exoscale-cli_1.20.2_linux_amd64.deb /
@@ -13,4 +13,9 @@ RUN apt-get update
 RUN apt-get install -y ca-certificates
 RUN apt-get install -y ruby
 
-ENTRYPOINT ["ruby", "serviceDiscovery.rb"]
+# install ruby gems
+# -N to remove docs
+RUN gem install -N sinatra
+RUN gem install -N cloudstack_client
+
+ENTRYPOINT ["ruby", "autoscaler.rb"]

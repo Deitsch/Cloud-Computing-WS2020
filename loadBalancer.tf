@@ -1,12 +1,12 @@
 resource "exoscale_nlb" "NLB_MyService" {
   name = "NLB_MyService"
-  description = "This is the Network Load Balancer for my service"
+  description = "Managed by Terraform"
   zone = var.zone
 }
 
 resource "exoscale_nlb_service" "NLB_Service_MyService" {
   name = "NLB_Service_MyService"
-  description = "MyService NLB service"
+  description = "Managed by Terraform"
   zone = exoscale_nlb.NLB_MyService.zone
   nlb_id = exoscale_nlb.NLB_MyService.id
   instance_pool_id = exoscale_instance_pool.InstancePool_MyService.id
