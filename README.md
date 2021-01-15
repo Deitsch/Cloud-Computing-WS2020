@@ -25,3 +25,21 @@ docker run \
     -e TARGET_PORT=${target_port} \
     deitsch/exoscale_sd
 ```
+
+## Autoscaler
+
+There are 2 options to get the image:
+1. Pull `deitsch/exoscale_sa` from Dockerhub
+2. Build the agent with the [Dockerfile](autoscaler/Dockerfile)
+
+### Example
+```shell
+docker run \
+  -p ${listen_port}:${listen_port} \
+  -e EXOSCALE_KEY=${exoscale_key} \
+  -e EXOSCALE_SECRET=${exoscale_secret} \
+  -e EXOSCALE_ZONE=${exoscale_zone} \
+  -e EXOSCALE_INSTANCEPOOL_ID=${exoscale_instancepool_id} \
+  -e LISTEN_PORT=${listen_port}  \
+  deitsch/exoscale_as
+```
