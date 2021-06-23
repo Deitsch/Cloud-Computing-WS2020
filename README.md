@@ -1,6 +1,6 @@
 # Cloud-Computing-WS2020
 
-Repo for Terraform hand-ins for Cloud Computing WS2020. 
+Repo for Terraform hand-ins for Cloud Computing WS2020  
 ...using Terraform, Prometheus and Grafana
 
 ## Service Discovery Agent
